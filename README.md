@@ -7,6 +7,6 @@ Warehouse for my studying notes.
 
 2. Maths
 
-2.1 Calculs
+2.1 Calculus
 
 2.2 Algebra
