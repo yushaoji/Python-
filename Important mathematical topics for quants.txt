@@ -1,0 +1,128 @@
+# Important mathematical topics for quants
+
+## Black Scholes 
+
+B-S is a mathematical formula that is used to determine the price of a European call option(or put) on a financial instrument. The model assumes price movements follow *geometric Brownian motion* with constant drift and volatility. 
+
+> Brownian motion originally referred to the microscopic motions of a small particle floating in a liquid; if stock prices move in a similar way, then the random increments or price changes will be normally distributed with an infinitesimal variance.
+
+$dS = \mu Sdt + \sigma SdW$
+
+> -  $\mu$,$\sigma$ are constant
+> 
+> - $W$ is a Wiener process. *A Wiener process is a type of stochastic process with a mean change of zero and a variance equal to Δt—this is simply another way to describe Brownian motion.  If the value of a variable following a Wiener process is $x_0$ at time zero, at time T, it will be normally distributed with mean = $x_0$ and a standard deviation equal to the square root of T.*
+
+The basis of Black-Scholes is Ito’s Lemma, which explains the process of stochastic behavior. If a variable x follows an Ito process ($dx = a(x, t) + b(x, t)dW$) then Ito’s Lemma shows that a function $G$, of $x$ and $t$, follows the process:
+
+$dG = (\frac{dG}{dx}\alpha + \frac{dG}{dt} + \frac{1}{2}\frac{d^2G}{dx^2}\sigma^2S^2)dt + (\frac{dG}{dS}\sigma S)dW$
+
+**If $f$ is the price of a call option on stock $S$, and $f$ is a function of $S$ and $t$, then via Ito's Lemma:**
+
+$df = (\frac{df}{dS}\mu S + \frac{df}{dt} + \frac{1}{2}\frac{d^2f}{dS^2}\sigma^2S^2)dt + (\frac{df}{dS}\sigma S)dW$
+
+*The above formula incorporates*
+
+- the constant price variation of the stock(volatility)
+- the time value of money
+- the option's strike price 
+- the option's time to expiry
+
+B-S for a non-dividend paying stock depends on the construction of a diskless portfolio, where positions are taken in *bonds/cash, the underlying stock and options*
+
+If one holds 1 unit of a derivative $f$ + $\frac{df}{ds}$ shares, the change in the value of this portfolio $\prod$ over time $\Delta t$ equals to:
+
+$\Delta \prod = -\Delta f + \frac{df}{dS}\Delta S$
+-->
+$\Delta \prod = (-\frac{df}{dt} - \frac{1}{2} \frac{d^2f}{dS^2}\sigma^2S^2)\Delta t$
+
+In the above equation, there is no $dW$. During time increment $\Delta t$, the portfolio is not subject to random movement, it must earn the diskless rate, because:
+
+$\Delta \prod = r \prod \Delta t$
+
+ 
+
+--> $(\frac{df}{dt} + rS\frac{df}{dS} + \frac{1}{2}\sigma^2S^2\frac{d^2f}{dS^2}) = rf$ (*B-S equation*)
+
+### Assumptions:
+
+- There is no arbitrage opportunity
+- Possible to borrow/lend at the same constant risk-free i.r
+- Possible to buy/sell stocks in any amount(*including fractional amounts*. 
+- No restraint on short selling.
+- No transaction costs(*market is frictionless*)
+- Stock price movements follow *geometric Brownian motion* with constant drift and volatility. 
+
+
+## Greek letters
+
+#### Delta
+
+Measures the rate of change in the option value with respect to changes in the underlying asset’s price (the first derivative of the option price with respect to the underlying price). 
+
+#### Gamma
+
+Measures the rate of change of the option delta with respect to the change in the underlying asset price (the second derivative of the option price with respect to the underlying price).  
+
+> Even if the underlying asset price remains unchanged, the option delta for an in-the-money option increases as expiration nears; the opposite is true for an out-of-the-money option.  The gamma of an option indicates how the delta of an option will change for a one-point move in the underlying asset. In other words, the Gamma shows the option delta’s sensitivity to market price changes.  Gamma is important for maintaining a delta neutral position.
+
+#### Vega
+
+Measures the sensitivity of the option to changes in implied volatility. It equals the first derivative of the option price with respect to the volatility of the underlying asset.  
+
+**Vega is typically expressed as the amount of money per underlying share that the option’s value will gain or lose as volatility rises or falls by 1%.** 
+
+Vega is most sensitive when the option is at-the-money and tapers off either side as the market trades above/below the strike. 
+
+
+#### Theta
+
+ Theta measures how fast the premium of an option decays with time or how much value an option’s price will diminish per day—including non-business days (all other factors being constant).
+ 
+  **The nearer the expiration date, the higher the Theta.**
+ 
+#### Rho
+
+Rho measures the sensitivity of a stock option’s price to a change in interest rates; typically, changes in interest rates over short time periods have very little effect on options where the underlying asset is not rate sensitive (equities instead of bonds, for example).
+
+*Call options rise in value when interest rates rise; the opposite is true for puts.   Rho increases as time to expiration becomes longer.*
+
+
+#### Vanna
+
+ the sensitivity of the option delta with respect to a change in volatility, and can be helpful in maintaining a Delta-hedged or Vega-hedged portfolio.
+ 
+#### Volga
+
+the second derivative of the option value with respect to a change in volatility; in other words, it measures the rate of change in Vega as volatility changes. 
+
+## Delta Hedge
+
+Generally speaking, when one purchases options and delta hedges, one wants future realized volatility to be higher than the implied volatility at which the option was purchased.
+
+**Daily P&L of a delta-hedge position**
+
+
+$Daily P\&L = Gamma P\&L + Theta P\&L + Vega P\&L + Others$
+
+*“Other” includes the P&L from financing the underlying position as well as P&L due to changes in interest rates and dividend expectations.*
+
+
+$Daily P\&L = \frac{1}{2} \Gamma(\Delta S)^2 + \Theta (\Delta t) + v (\Delta \sigma)$
+
+> - $\Delta S$ is the change in the underlying stock price
+> - $\Delta t$ is the fraction of time elapsed
+> - $\Delta \sigma$ is the change in the implied volatility
+
+
+## Realized volatility
+
+Is the historical annualized S.D of an asset's log returns.
+
+1. Calculating S.D of the log returns of an asset
+2. Multiplying the value by the square root of the frequency of the data(Weekly: $\sqrt {52}$, daily: $\sqrt {252}$)
+
+Difference between realized volatility & implied volatility:
+> Realized volatility is based entirely on an asset price’s past behavior over some calculated period
+> Implied volatility is an input into the Black-Scholes model that is based on an asset’s assumed volatility over the option period.
+
+[^http://www.streetofwalls.com/finance-training-courses/quantitative-hedge-fund-training/important-quant-math-topics/]
